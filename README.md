@@ -63,14 +63,13 @@ And then execute:
     $ bundle
 
 Enable new matchers in your `spec_helper`:
+
 ```ruby
-spec/spec_helper.rb
 RSpec.configure do |config|
   # ...
-  config.include RspecDomTesting::Matchers
+  config.include RSpecDomTesting::Matchers
 end
 ```
-
 
 ## Usage
 

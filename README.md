@@ -1,4 +1,4 @@
-# Rspec::Dom::Testing
+# RSpec DOM Testing
 
 [![Build Status](https://travis-ci.org/kirs/rspec-dom-testing.svg)](https://travis-ci.org/kirs/rspec-dom-testing)
 
@@ -9,7 +9,7 @@ Port of [rails-dom-testing](https://github.com/rails/rails-dom-testing) gem into
 Rails 5 deprecates controller testing in favor of integration testing.
 In Rails 4 and 5, you could write expectations on `assigns` and `render_template`, like:
 
-```
+```ruby
 get :index
 
 expect(assings(:posts).size).to eq 2
@@ -22,7 +22,7 @@ In Rails 5 you can't access internal variables or templates, since it's controll
 
 Instead of it, now you have to check response body for matching content, like:
 
-```
+```ruby
 get :index
 
 expect(response.body).to include "Post title"
@@ -30,9 +30,9 @@ expect(response.body).to include "Post title"
 
 ### Solution
 
-For better DSL, `rspec-dom-testing` allows to write DOM expectations:
+For better DSL, this gem allows to write DOM expectations:
 
-```
+```ruby
 get :index
 
 expect(response).to have_css_selector("div.post", 2) # body should have two .post divs

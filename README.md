@@ -35,7 +35,19 @@ For better DSL, this gem allows to write DOM expectations:
 ```ruby
 get :index
 
-expect(response).to have_css_selector("div.post", 2) # body should have two .post divs
+# body should have two .post divs
+expect(response).to have_css_selector("div.post", 2)
+```
+
+```ruby
+get :sign_in
+
+# body should have any number of .sign_in blocks
+# .sign_in block should have email and password fields
+expect(response).to have_css_selector(".sign_in") do |signin|
+  expect(signin).to have_css_selector(".email")
+  expect(signin).to have_css_selector(".password")
+end
 ```
 
 ## Installation

@@ -2,9 +2,41 @@
 
 [![Build Status](https://travis-ci.org/kirs/rspec-dom-testing.svg)](https://travis-ci.org/kirs/rspec-dom-testing)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rspec/dom/testing`. To experiment with that code, run `bin/console` for an interactive prompt.
+Port of [rails-dom-testing](https://github.com/rails/rails-dom-testing) gem into RSpec, including some batteries.
 
-TODO: Delete this and the text above, and describe your gem
+### Problem
+
+Rails 5 deprecates controller testing in favor of integration testing.
+In Rails 4 and 5, you could write expectations on `assigns` and `render_template`, like:
+
+```
+get :index
+
+expect(assings(:posts).size).to eq 2
+expect(assings(:posts)).to include post
+
+expect(response).to render_template("_post")
+```
+
+In Rails 5 you can't access internal variables or templates, since it's controller private logic.
+
+Instead of it, now you have to check response body for matching content, like:
+
+```
+get :index
+
+expect(response.body).to include "Post title"
+```
+
+### Solution
+
+For better DSL, `rspec-dom-testing` allows to write DOM expectations:
+
+```
+get :index
+
+expect(response).to have_css_selector("div.post", 2) # body should have two .post divs
+```
 
 ## Installation
 
@@ -18,22 +50,19 @@ And then execute:
 
     $ bundle
 
+Enable new matchers in your `spec_helper`:
 ```ruby
 spec/spec_helper.rb
 RSpec.configure do |config|
+  # ...
   config.include RspecDomTesting::Matchers
 end
+```
 
 
 ## Usage
 
 TODO: Write usage instructions here
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release` to create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
